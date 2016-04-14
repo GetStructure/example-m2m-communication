@@ -73,7 +73,7 @@ void setup() {
 void buttonPressed() {
   Serial.println("Button Pressed!");
 
-  // Structure uses a JSON protocol. Construct the simple state object.
+  // Losant uses a JSON protocol. Construct the simple state object.
   // { "button" : true }
   StaticJsonBuffer<200> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
