@@ -1,30 +1,30 @@
 /**
- * Example internet button created for Structure Blog. This sketch was designed to
+ * Example internet button created for Losant Blog. This sketch was designed to
  * run on an AdaFruit Feather Huzzah.
  *
- * Copyright (c) 2016 Structure. All rights reserved.
- * http://www.getstructure.io
+ * Copyright (c) 2016 Losant. All rights reserved.
+ * https://www.losant.com
  */
 
 #include <ESP8266WiFi.h>
-#include <Structure.h>
+#include <Losant.h>
 
 // WiFi credentials.
 const char* WIFI_SSID = "wifi-ssid";
 const char* WIFI_PASS = "wifi-pass";
 
-// Structure credentials.
-const char* STRUCTURE_DEVICE_ID = "my-device-id";
-const char* STRUCTURE_ACCESS_KEY = "my-access-key";
-const char* STRUCTURE_ACCESS_SECRET = "my-access-secret";
+// Losant credentials.
+const char* LOSANT_DEVICE_ID = "my-device-id";
+const char* LOSANT_ACCESS_KEY = "my-access-key";
+const char* LOSANT_ACCESS_SECRET = "my-access-secret";
 
 const int BUTTON_PIN = 14;
 
 WiFiClientSecure wifiClient;
 
-// Create a StructureDevice instance that will be used
-// to communicate with the Structure platform.
-StructureDevice device(STRUCTURE_DEVICE_ID);
+// Create a LosantDevice instance that will be used
+// to communicate with the Losant platform.
+LosantDevice device(LOSANT_DEVICE_ID);
 
 void connect() {
 
@@ -46,11 +46,11 @@ void connect() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
-  // Connect to Structure.
+  // Connect to Losant.
   Serial.println();
-  Serial.print("Connecting to Structure...");
+  Serial.print("Connecting to Losant...");
 
-  device.connectSecure(wifiClient, STRUCTURE_ACCESS_KEY, STRUCTURE_ACCESS_SECRET);
+  device.connectSecure(wifiClient, LOSANT_ACCESS_KEY, LOSANT_ACCESS_SECRET);
 
   while(!device.connected()) {
     delay(500);
@@ -79,7 +79,7 @@ void buttonPressed() {
   JsonObject& root = jsonBuffer.createObject();
   root["button"] = true;
 
-  // Send the state to Structure.
+  // Send the state to Losant.
   device.sendState(root);
 }
 
@@ -95,7 +95,7 @@ void loop() {
   }
 
   if(!device.connected()) {
-    Serial.println("Disconnected from Structure");
+    Serial.println("Disconnected from Losant");
     Serial.println(device.mqttClient.state());
     toReconnect = true;
   }
